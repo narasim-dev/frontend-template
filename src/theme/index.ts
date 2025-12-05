@@ -1,4 +1,6 @@
-export const theme = {
+import 'styled-components'
+
+export const defaultTheme = {
   colors: {
     primary: '#3b82f6',
     primaryHover: '#2563eb',
@@ -35,4 +37,10 @@ export const theme = {
   },
 } as const
 
-export type Theme = typeof theme
+export type Theme = typeof defaultTheme
+
+// Extend styled-components DefaultTheme
+declare module 'styled-components' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+  export interface DefaultTheme extends Theme {}
+}

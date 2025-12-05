@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env tsx
 
 import fs from 'fs'
 import path from 'path'
@@ -24,14 +24,14 @@ fs.mkdirSync(componentsDir, { recursive: true })
 
 // Component file
 const componentContent = `import styled from 'styled-components'
-import { theme } from '../../theme'
 
 export interface ${componentName}Props {
   children?: React.ReactNode
 }
 
 const Styled${componentName} = styled.div\`
-  // Add styles here
+  // Add styles here using theme from ThemeProvider:
+  // color: \${({ theme }) => theme.colors.text};
 \`
 
 export function ${componentName}({ children }: ${componentName}Props) {
@@ -47,18 +47,23 @@ export type { ${componentName}Props } from './${componentName}'
 // Test file
 const testContent = `import { render, screen } from '@testing-library/react'
 import { describe, it, expect } from 'vitest'
+import { ThemeProvider } from 'styled-components'
 import { ${componentName} } from './${componentName}'
+import { defaultTheme } from '@/theme'
+
+const renderWithTheme = (ui: React.ReactElement) =>
+  render(<ThemeProvider theme={defaultTheme}>{ui}</ThemeProvider>)
 
 describe('${componentName}', () => {
   it('renders children', () => {
-    render(<${componentName}>Test content</${componentName}>)
+    renderWithTheme(<${componentName}>Test content</${componentName}>)
     expect(screen.getByText('Test content')).toBeInTheDocument()
   })
 })
 `
 
 // Stories file
-const storiesContent = `import type { Meta, StoryObj } from '@storybook/react'
+const storiesContent = `import type { Meta, StoryObj } from '@storybook/react-vite'
 import { ${componentName} } from './${componentName}'
 
 const meta: Meta<typeof ${componentName}> = {

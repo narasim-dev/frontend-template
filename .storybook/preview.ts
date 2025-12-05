@@ -1,4 +1,7 @@
 import type { Preview } from '@storybook/react-vite'
+import { ThemeProvider } from 'styled-components'
+import { defaultTheme } from '../src/theme'
+import React from 'react'
 
 const preview: Preview = {
   parameters: {
@@ -9,6 +12,14 @@ const preview: Preview = {
       },
     },
   },
+  decorators: [
+    (Story) =>
+      React.createElement(
+        ThemeProvider,
+        { theme: defaultTheme },
+        React.createElement(Story)
+      ),
+  ],
 }
 
 export default preview

@@ -9,21 +9,4 @@ export default defineConfig({
       '@': resolve(__dirname, 'src'),
     },
   },
-  build: {
-    lib: {
-      entry: resolve(__dirname, 'src/index.ts'),
-      formats: ['es'],
-      fileName: 'index',
-    },
-    rollupOptions: {
-      external: ['react', 'react-dom', 'styled-components'],
-      output: {
-        globals: {
-          react: 'React',
-          'react-dom': 'ReactDOM',
-          'styled-components': 'styled',
-        },
-      },
-    },
-  },
 })

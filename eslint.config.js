@@ -2,6 +2,7 @@
 import storybook from "eslint-plugin-storybook";
 
 import js from '@eslint/js'
+import globals from 'globals'
 import typescript from '@typescript-eslint/eslint-plugin'
 import typescriptParser from '@typescript-eslint/parser'
 import reactHooks from 'eslint-plugin-react-hooks'
@@ -18,10 +19,8 @@ export default [js.configs.recommended, {
       },
     },
     globals: {
+      ...globals.browser,
       React: 'readonly',
-      console: 'readonly',
-      document: 'readonly',
-      window: 'readonly',
     },
   },
   plugins: {
